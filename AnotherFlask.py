@@ -19,10 +19,17 @@ tasks = [
         'title': u'Learn Python',
         'description': u'Need to find a good Python tutorial on the web',
         'done': False
+    },
+    {
+        'id': 3,
+        'title': u'Learn C',
+        'description': u'Find nice tutorial of C/C++',
+        'done': False
     }
 ]
 
-# This fucntion update task's id with an automatic URI generated from library url_for
+
+# This function update task's id with an automatic URI generated from library url_for
 def make_public_task(task):
     new_task = {}
     for field in task:
@@ -75,7 +82,7 @@ class getall(Resource):
         return jsonify({'task': task}), 201
 
 
-@api.route('/alltasks/<int:task_id>', methods=['GET'])
+@api.route('/alltasks/<int:task_id>')
 class gettask(Resource):
     def get(self, task_id):
         """
@@ -89,9 +96,6 @@ class gettask(Resource):
             abort(404)
         return jsonify({'task': [make_public_task(task[0])]})
 
-
-@api.route('/alltasks/<int:task_id>', methods=['DELETE'])
-class deletetask(Resource):
     def delete(self, task_id):
         """
             This method should remove a task from the data structure tasks
