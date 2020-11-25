@@ -22,7 +22,7 @@ tasks = [
     }
 ]
 
-
+# This fucntion update task's id with an automatic URI generated from library url_for
 def make_public_task(task):
     new_task = {}
     for field in task:
@@ -38,9 +38,10 @@ class hi(Resource):
     def get(self, name):
         """
             Hi, dynamic URL with name
-            :param name: string that you insert/n
-            :return: return a string with 'Hi' and the name you have insert
-            """
+
+        :param name: string that you insert/n
+        :return: return a string with 'Hi' and the name you have insert
+        """
         return "Hi %s" % name
 
 
@@ -49,8 +50,9 @@ class getall(Resource):
     def get(self):
         """
             Get all the tasks ubt with no id, using the URI library
-            :return: return a json with all the tasks with uri
-            """
+
+        :return: return a json with all the tasks with uri
+        """
         return jsonify({'tasks': [make_public_task(task) for task in tasks]})
 
     def post(self):
