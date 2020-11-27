@@ -1,8 +1,9 @@
-from flask import Flask, jsonify, abort, request, url_for
-import werkzeug
 
+import werkzeug
 werkzeug.cached_property = werkzeug.utils.cached_property
+from flask import Flask, jsonify, abort, request, url_for
 from flask_restplus import Api, Resource
+
 
 app = Flask(__name__)
 api = Api(app)
@@ -40,13 +41,15 @@ def make_public_task(task):
     return new_task
 
 
-@api.route('/<name>', methods=['GET'])
+@api.route('/<name>')
 class hi(Resource):
-    def get(self, name):
+
+    @staticmethod
+    def get(name):
         """
             Hi, dynamic URL with name
 
-        :param name: string that you insert/n
+        :param name: string that you insert
         :return: return a string with 'Hi' and the name you have insert
         """
         return "Hi %s" % name
@@ -54,7 +57,9 @@ class hi(Resource):
 
 @api.route('/alltasks')
 class getall(Resource):
-    def get(self):
+
+    @staticmethod
+    def get():
         """
             Get all the tasks ubt with no id, using the URI library
 
@@ -62,7 +67,8 @@ class getall(Resource):
         """
         return jsonify({'tasks': [make_public_task(task) for task in tasks]})
 
-    def post(self):
+    @staticmethod
+    def post():
         """
             This method insert a task in the tasks data structure with post method
 
@@ -84,7 +90,9 @@ class getall(Resource):
 
 @api.route('/alltasks/<int:task_id>')
 class gettask(Resource):
-    def get(self, task_id):
+
+    @staticmethod
+    def get(task_id):
         """
             This method take 1 URI of my structure if present and return it in the page
 
@@ -96,7 +104,8 @@ class gettask(Resource):
             abort(404)
         return jsonify({'task': [make_public_task(task[0])]})
 
-    def delete(self, task_id):
+    @staticmethod
+    def delete(task_id):
         """
             This method should remove a task from the data structure tasks
 
